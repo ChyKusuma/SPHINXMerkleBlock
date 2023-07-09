@@ -22,13 +22,14 @@ Unlike alternative post-quantum digital signature algorithms such as [Crystals-d
 
 With the SPHINX_MerkleBlock namespace, we empower developers to harness the advanced capabilities of SPHINCS+ and build secure, future-proof applications that can withstand the challenges posed by the dawn of the quantum era.
 
-We know that Hash-Based digital signature scheme is not lattice-based and also relly on the strength of the hash-function, thats why our default "SPHINX_256" hash function is based on SWIFFTX that rely on ideal lattice strength.
+We know that Hash-Based digital signature scheme is not lattice-based and also relly on the strength of the hash-function, thats why our default 'SPHINX_256' hash function is based on SWIFFTX which is rely on "Lattice-based" strength, here we achieve "Statelessness" and "Lattice-based" at once.
+
+
+## Components
 
 This code represents the implementation of the `SPHINX_MerkleBlock` namespace, which includes the `MerkleBlock` class responsible for constructing and verifying Merkle trees. Let's break down the important components and their functions:
 
 #### SPHINX_MerkleBlock::MerkleBlock Class
-
-## Components
 
 ### SPHINX_MerkleBlock Namespace
 

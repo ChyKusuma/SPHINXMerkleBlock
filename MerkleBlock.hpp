@@ -240,25 +240,32 @@ bool MerkleBlock::verifyMerkleRoot(const std::string& merkleRoot, const std::vec
     }
 
     bool MerkleBlock::sign(const std::vector<uint8_t>& msg, const std::vector<uint8_t>& sk_seed, const std::vector<uint8_t>& pk_seed, uint64_t idx_tree, uint32_t idx_leaf, std::vector<uint8_t>& sig) const {
-        constexpr uint32_t h = 128;
-        constexpr uint32_t d = 16;
-        constexpr size_t n = 32;
-        constexpr size_t w = 64;
-        constexpr sphincs_hashing::variant v = sphincs_hashing::variant::SHA3_256;
+        // Define the necessary parameters for signing
+        constexpr uint32_t h = 128; // Security parameter related to the hash function
+        constexpr uint32_t d = 16;  // Number of layers in the hash tree
+        constexpr size_t n = 32;    // Size of the hash output in bytes
+        constexpr size_t w = 64;    // Winternitz parameter for the WOTS+ construction
+        constexpr sphincs_hashing::variant v = sphincs_hashing::variant::SHA3_256;  // Variant of the hash function (SHA3-256)
 
+        // Call the signing function from the SPHINCS library
         sphincs_ht::sign<h, d, n, w, v>(sk_seed.data(), pk_seed.data(), idx_tree, idx_leaf, sig.data());
-        return true; // Return appropriate success/failure value
+
+        // Return an appropriate success/failure value
+        return true;
     }
 
     bool MerkleBlock::verify(const std::vector<uint8_t>& msg, const std::vector<uint8_t>& sig, const std::vector<uint8_t>& pk_seed, uint64_t idx_tree, uint32_t idx_leaf, const std::vector<uint8_t>& pkey) const {
-        constexpr uint32_t h = 128;
-        constexpr uint32_t d = 16;
-        constexpr size_t n = 32;
-        constexpr size_t w = 64;
-        constexpr sphincs_hashing::variant v = sphincs_hashing::variant::SHA3_256;
+        // Define the necessary parameters for verification
+        constexpr uint32_t h = 128; // Security parameter related to the hash function
+        constexpr uint32_t d = 16;  // Number of layers in the hash tree
+        constexpr size_t n = 32;    // Size of the hash output in bytes
+        constexpr size_t w = 64;    // Winternitz parameter for the WOTS+ construction
+        constexpr sphincs_hashing::variant v = sphincs_hashing::variant::SHA3_256;  // Variant of the hash function (SHA3-256)
 
+        // Call the verification function from the SPHINCS library
         return sphincs_ht::verify<h, d, n, w, v>(msg.data(), sig.data(), pk_seed.data(), idx_tree, idx_leaf, pkey.data());
     }
+
 
     std::vector<std::string> MerkleBlock::constructWotsTree(const std::vector<std::string>& roots) const {
         std::vector<std::string> wotsTree;
@@ -277,40 +284,47 @@ bool MerkleBlock::verifyMerkleRoot(const std::string& merkleRoot, const std::vec
     }
 
     std::vector<std::string> MerkleBlock::constructForsTree(const std::vector<std::string>& transactions) const {
-    // Convert transactions to bytes (assuming they are already encoded)
+        // Convert transactions to bytes (assuming they are already encoded)
         std::vector<uint8_t> transactionBytes;
         for (const auto& transaction : transactions) {
             transactionBytes.insert(transactionBytes.end(), transaction.begin(), transaction.end());
         }
 
-        // Set the necessary parameters
-        constexpr size_t n = 32;
-        constexpr uint32_t a = 32;
-        constexpr uint32_t k = 8;
-        constexpr sphincs_hashing::variant v = sphincs_hashing::variant::SHA3_256;
+        // Set the necessary parameters for FORS construction
+        constexpr size_t n = 32;    // Size of the hash output in bytes
+        constexpr uint32_t a = 32;  // Size of the message digest
+        constexpr uint32_t k = 8;   // Number of iterations of the Winternitz algorithm
+        constexpr sphincs_hashing::variant v = sphincs_hashing::variant::SHA3_256;  // Variant of the hash function (SHA3-256)
 
-        // Generate the FORS public key
+        // Generate the FORS public key using the provided parameters
         uint8_t pk[n];
         sphincs_fors::pkgen<n, a, k, v>(nullptr, nullptr, sphincs_adrs::fors_tree_t(), pk);
 
         // Convert the public key to a string (assuming we want to return it as a string)
         std::string pkString(pk, pk + n);
 
-        // Return the FORS public key
+        // Return the FORS public key as a vector of strings
         return {pkString};
     }
 
     std::string MerkleBlock::constructHypertree(const std::vector<std::string>& roots) const {
-        constexpr uint32_t h = 128;
-        constexpr uint32_t d = 16;
-        constexpr size_t n = 32; // SHA3-256 produces a 32-byte hash output
-        constexpr size_t w = 64;
-        constexpr sphincs_hashing::variant v = sphincs_hashing::variant::SHA3_256;
+        // Set the necessary parameters for Hypertree construction
+        constexpr uint32_t h = 128;   // Height of the binary tree
+        constexpr uint32_t d = 16;    // Number of layers in the binary tree
+        constexpr size_t n = 32;      // Size of the hash output in bytes (SHA3-256)
+        constexpr size_t w = 64;      // Winternitz parameter
+        constexpr sphincs_hashing::variant v = sphincs_hashing::variant::SHA3_256;  // Variant of the hash function (SHA3-256)
 
+        // Generate or retrieve the secret key seed for Hypertree
         std::string skSeed = SPHINXUtils::generateOrRetrieveSecretKeySeed();
+
+        // Generate or retrieve the public key seed for Hypertree
         std::string pkSeed = SPHINXUtils::generateOrRetrievePublicKeySeed();
 
+        // Create a string to store the Hypertree root
         std::string hypertreeRoot(n, '\0');
+
+        // Generate the Hypertree root using the provided parameters and seeds
         sphincs_ht::pkgen<h, d, n, w, v>(reinterpret_cast<const uint8_t*>(skSeed.data()), reinterpret_cast<const uint8_t*>(pkSeed.data()), reinterpret_cast<uint8_t*>(hypertreeRoot.data()));
 
         // Initialize the Hypertree
@@ -324,21 +338,32 @@ bool MerkleBlock::verifyMerkleRoot(const std::string& merkleRoot, const std::vec
         // Compute the Hypertree root
         std::string hypertreeRootHash = ht.compute_root();
 
+        // Return the computed Hypertree root
         return hypertreeRootHash;
     }
 
 
     std::string MerkleBlock::constructXMSS(const std::string& hypertreeRoot) const {
-        constexpr uint32_t h = 128;
-        constexpr uint32_t d = 16;
-        constexpr size_t n = 32;  // SHA3-256 produces a 32-byte hash output
-        constexpr size_t w = 64;
-        constexpr sphincs_hashing::variant v = sphincs_hashing::variant::SHA3_256;
+        // Set the necessary parameters for XMSS construction
+        constexpr uint32_t h = 128;  // Height of the binary tree
+        constexpr uint32_t d = 16;   // Number of layers in the binary tree
+        constexpr size_t n = 32;     // Size of the hash output in bytes (SHA3-256)
+        constexpr size_t w = 64;     // Winternitz parameter
+        constexpr sphincs_hashing::variant v = sphincs_hashing::variant::SHA3_256;  // Variant of the hash function (SHA3-256)
 
+        // Generate the secret key seed for XMSS
         std::string sk_seed = SPHINXUtils::generateSecretKeySeed();
+
+        // Generate the public key seed for XMSS
         std::string pk_seed = SPHINXUtils::generatePublicKeySeed();
+
+        // Create a string to store the XMSS public key
         std::string pkey(n, '\0');
+
+        // Generate the XMSS public key using the provided parameters and seeds
         sphincs_ht::pkgen<h, d, n, w, v>(reinterpret_cast<const uint8_t*>(sk_seed.data()), reinterpret_cast<const uint8_t*>(pk_seed.data()), reinterpret_cast<uint8_t*>(pkey.data()));
+
+        // Return the XMSS public key
         return pkey;
     }
 
@@ -358,19 +383,25 @@ bool MerkleBlock::verifyMerkleRoot(const std::string& merkleRoot, const std::vec
     std::vector<std::string> merkleTree = transactionList;
 
     while (merkleTree.size() > 1) {
-        std::vector<std::string> newMerkleTree;
+    std::vector<std::string> newMerkleTree;
 
-        // Hash pairs of transactions
+    // Hash pairs of transactions
         for (size_t i = 0; i < merkleTree.size(); i += 2) {
+            // Get the current pair of transactions
             std::string transaction1 = merkleTree[i];
             std::string transaction2 = (i + 1 < merkleTree.size()) ? merkleTree[i + 1] : merkleTree[i];
 
+            // Hash the pair of transactions
             std::string hashedTransaction = hashTransactions(transaction1, transaction2);
+
+            // Add the hashed transaction to the new Merkle tree
             newMerkleTree.push_back(hashedTransaction);
         }
 
+        // Replace the current Merkle tree with the new one
         merkleTree = newMerkleTree;
     }
+
 
     // Return the Merkle root hash
     std::string calculatedMerkleRoot = (merkleTree.empty()) ? "" : merkleTree[0];

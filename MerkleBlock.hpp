@@ -12,7 +12,7 @@
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-// The provided code is an implementation of the SPHINCS+ Merkle Trees scheme. Explaination its components in detail:
+// The provided code is an implementation of the SPHINCS+ Merkle Trees scheme. Let's break down the code and explain its components in detail:
 
 // Namespaces:
   // SPHINXSign: Contains the verifySignature function used for verifying signatures.
@@ -240,14 +240,14 @@ bool MerkleBlock::verifyMerkleRoot(const std::string& merkleRoot, const std::vec
     }
 
     bool MerkleBlock::sign(const std::vector<uint8_t>& msg, const std::vector<uint8_t>& sk_seed, const std::vector<uint8_t>& pk_seed, uint64_t idx_tree, uint32_t idx_leaf, std::vector<uint8_t>& sig) const {
-    constexpr uint32_t h = 128;
-    constexpr uint32_t d = 16;
-    constexpr size_t n = 32;
-    constexpr size_t w = 64;
-    constexpr sphincs_hashing::variant v = sphincs_hashing::variant::SHA3_256;
+        constexpr uint32_t h = 128;
+        constexpr uint32_t d = 16;
+        constexpr size_t n = 32;
+        constexpr size_t w = 64;
+        constexpr sphincs_hashing::variant v = sphincs_hashing::variant::SHA3_256;
 
-    sphincs_ht::sign<h, d, n, w, v>(sk_seed.data(), pk_seed.data(), idx_tree, idx_leaf, sig.data());
-    return true; // Return appropriate success/failure value
+        sphincs_ht::sign<h, d, n, w, v>(sk_seed.data(), pk_seed.data(), idx_tree, idx_leaf, sig.data());
+        return true; // Return appropriate success/failure value
     }
 
     bool MerkleBlock::verify(const std::vector<uint8_t>& msg, const std::vector<uint8_t>& sig, const std::vector<uint8_t>& pk_seed, uint64_t idx_tree, uint32_t idx_leaf, const std::vector<uint8_t>& pkey) const {

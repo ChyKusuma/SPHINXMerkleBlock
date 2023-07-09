@@ -32,8 +32,6 @@ NOTE; This repository only implement "Merkle trees" scheme based on SPHINCS+ sch
 
 This code represents the implementation of the `SPHINX_MerkleBlock` namespace, which includes the `MerkleBlock` class responsible for constructing and verifying Merkle trees. Let's break down the important components and their functions:
 
-#### SPHINX_MerkleBlock::MerkleBlock Class
-
 ### SPHINX_MerkleBlock Namespace
 
 This code represents the implementation of the `SPHINX_MerkleBlock` namespace, which includes the `MerkleBlock` class responsible for constructing and verifying Merkle trees. Let's break down the important components and their functions:

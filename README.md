@@ -8,7 +8,7 @@ This project is dedicated to the world community as an Open-source Post-quantum 
 This repository contains code for the SPHINXMerkleBlock project, which is a `Merkle trees` module for the SPHINX blockchain framework. The SPHINXMerkleBlock aims to provide a "Merkle trees" in the blockchain systems
 
 
-## Components
+# Components
 
 #### This repository is part of [SPHINXSign](https://github.com/SPHINX-HUB-ORG/SPHINXSign)
 

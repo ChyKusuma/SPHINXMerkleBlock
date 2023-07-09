@@ -25,7 +25,7 @@ With the SPHINX_MerkleBlock namespace, we empower developers to harness the adva
 We know that Hash-Based digital signature scheme is not lattice-based and relly on the strengthness of the hash-function, thats why our default `SPHINX_256` hash function is based on SWIFFTX which is rely on "Lattice-based", here we try achieve "Statelessness" and "Lattice-based" at once.
 
 
-NOTE; This repository only implement "Merkle trees" scheme based on SPHINCS+ scheme, for SPHINCS+ digital signature we separated that into another files.
+NOTE; This repository only implement "Merkle trees" scheme based on SPHINCS+ principle, for actual SPHINCS+ digital signature we separated that into another files.
 
 
 ## Components

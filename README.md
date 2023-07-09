@@ -9,6 +9,7 @@ This repository contains code for the SPHINXMerkleBlock project, which is a `Mer
 
 
 ## Components
+## This repository is part of ([SPHINXMerkleBlock][([https://www.nist.gov/publications/breaking-category-five-sphincs-sha-256](https://github.com/SPHINX-HUB-ORG/SPHINXMerkleBlock](https://github.com/SPHINX-HUB-ORG/SPHINXSign)))).
 
 The `SPHINX_MerkleBlock` namespace leverages the power of Merkle trees based on the state-of-the-art [SPHINCS+](https://sphincs.org/) principle, which emerged as the 4th winner in the "Post-Quantum" cryptography competition held by the National Institute of Standards and Technology ([NIST](https://www.nist.gov/publications/breaking-category-five-sphincs-sha-256)).
 
@@ -21,9 +22,6 @@ Unlike alternative post-quantum digital signature algorithms such as [Crystals-d
 With the SPHINX_MerkleBlock namespace, we empower developers to harness the advanced capabilities of SPHINCS+ and build secure, future-proof applications that can withstand the challenges posed by the dawn of the quantum era.
 
 We know that Hash-Based digital signature scheme is not lattice-based and relly on the strengthness of the hash-function, thats why our default `SPHINX_256` hash function is based on SWIFFTX which is rely on "Lattice-based", here we try to achieve `Statelessness` and `Lattice-based` at once.
-
-
-NOTE; This repository only implement "Merkle trees" scheme based on SPHINCS+ principle, for actual SPHINCS+ digital signature we separated that into another files.
 
 
 ## Components

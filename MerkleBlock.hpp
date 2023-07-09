@@ -224,22 +224,22 @@ bool MerkleBlock::verifyMerkleRoot(const std::string& merkleRoot, const std::vec
     }
 
     bool MerkleBlock::sign(const std::vector<uint8_t>& msg, const std::vector<uint8_t>& sk_seed, const std::vector<uint8_t>& pk_seed, uint64_t idx_tree, uint32_t idx_leaf, std::vector<uint8_t>& sig) const {
-        constexpr uint32_t h = /* specify the value of h */;
-        constexpr uint32_t d = /* specify the value of d */;
-        constexpr size_t n = /* specify the value of n */;
-        constexpr size_t w = /* specify the value of w */;
-        constexpr sphincs_hashing::variant v = /* specify the variant */;
+        constexpr uint32_t h = /* specify the value of h */; // Replace with actual value
+        constexpr uint32_t d = /* specify the value of d */; // Replace with actual value
+        constexpr size_t n = /* specify the value of n */; // Replace with actual value
+        constexpr size_t w = /* specify the value of w */; // Replace with actual value
+        constexpr sphincs_hashing::variant v = /* specify the variant */; // Replace with actual value
 
         sphincs_ht::sign<h, d, n, w, v>(sk_seed.data(), pk_seed.data(), idx_tree, idx_leaf, sig.data());
         return true; // Return appropriate success/failure value
     }
 
     bool MerkleBlock::verify(const std::vector<uint8_t>& msg, const std::vector<uint8_t>& sig, const std::vector<uint8_t>& pk_seed, uint64_t idx_tree, uint32_t idx_leaf, const std::vector<uint8_t>& pkey) const {
-        constexpr uint32_t h = /* specify the value of h */;
-        constexpr uint32_t d = /* specify the value of d */;
-        constexpr size_t n = /* specify the value of n */;
-        constexpr size_t w = /* specify the value of w */;
-        constexpr sphincs_hashing::variant v = /* specify the variant */;
+        constexpr uint32_t h = /* specify the value of h */; // Replace with actual value
+        constexpr uint32_t d = /* specify the value of d */; // Replace with actual value
+        constexpr size_t n = /* specify the value of n */; // Replace with actual value
+        constexpr size_t w = /* specify the value of w */; // Replace with actual value
+        constexpr sphincs_hashing::variant v = /* specify the variant */; // Replace with actual value
 
         return sphincs_ht::verify<h, d, n, w, v>(msg.data(), sig.data(), pk_seed.data(), idx_tree, idx_leaf, pkey.data());
     }

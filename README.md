@@ -9,7 +9,8 @@ This repository contains code for the SPHINXMerkleBlock project, which is a `Mer
 
 
 ## Components
-#### This repository is part of ([SPHINXSign]([https://www.nist.gov/publications/breaking-category-five-sphincs-sha-256](https://github.com/SPHINX-HUB-ORG/SPHINXMerkleBlock](https://github.com/SPHINX-HUB-ORG/SPHINXSign)).
+
+#### This repository is part of [SPHINXSign](https://github.com/SPHINX-HUB-ORG/SPHINXSign)
 
 The `SPHINX_MerkleBlock` namespace leverages the power of Merkle trees based on the state-of-the-art [SPHINCS+](https://sphincs.org/) principle, which emerged as the 4th winner in the "Post-Quantum" cryptography competition held by the National Institute of Standards and Technology ([NIST](https://www.nist.gov/publications/breaking-category-five-sphincs-sha-256)).
 

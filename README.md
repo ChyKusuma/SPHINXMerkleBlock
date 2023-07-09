@@ -25,9 +25,6 @@ With the SPHINX_MerkleBlock namespace, we empower developers to harness the adva
 We know that Hash-Based digital signature scheme is not lattice-based and relly on the strengthness of the hash-function, thats why our default `SPHINX_256` hash function is based on SWIFFTX which is rely on "Lattice-based", here we try to achieve `Statelessness` and `Lattice-based` at once.
 
 
-## Components
-
-
 ### Namespace Declarations
 - The code snippet begins with the declaration of several nested namespaces: `SPHINXSign`, `SPHINXBlock`, and `SPHINXMerkleBlock`.
 - These namespaces help organize related functions, classes, and types to avoid naming conflicts.

@@ -51,7 +51,7 @@ These components work together to provide functionality for constructing and ver
 
 ### This repository is part of the  [SPHINXPoW](https://github.com/SPHINX-HUB-ORG/SPHINXPoW) [SPHINXBlock](https://github.com/SPHINX-HUB-ORG/SPHINXBLOCK) [SPHINXChain](https://github.com/SPHINX-HUB-ORG/SPHINXCHAIN) 
 
-Please note that the code in this repository is a part of the SPHINX blockchain algorithm, which is currently in development and not fully integrated or extensively tested for functionality. The purpose of this repository is to provide a framework and algorithm for the mining scheme in the SPHINX blockchain project.
+Please note that the code in this repository is a part of the SPHINX blockchain algorithm, which is currently in development and not fully integrated or extensively tested for functionality. The purpose of this repository is to provide a framework and algorithm for the Merkle Trees scheme in the SPHINX blockchain project.
 
 As the project progresses, further updates and enhancements will be made to ensure the code's stability and reliability. We encourage contributors to participate in improving and refining the SPHINXBlock algorithm by submitting pull requests and providing valuable insights.
 

@@ -342,7 +342,6 @@ bool MerkleBlock::verifyMerkleRoot(const std::string& merkleRoot, const std::vec
         return hypertreeRootHash;
     }
 
-
     std::string MerkleBlock::constructXMSS(const std::string& hypertreeRoot) const {
         // Set the necessary parameters for XMSS construction
         constexpr uint32_t h = 128;  // Height of the binary tree

@@ -5,7 +5,7 @@
 
 This project is dedicated to the world community as an Open-source Post-quantum SPHINXMerkleBlock blockchain, means anyone can join and contribute based on his/ her passion and skills. SPHINX is a blockchain protocol designed to provide secure and scalable solutions in the post-quantum era.
 
-This repository contains code for the SPHINXMerkleBlock project, which is a mining module for the SPHINX blockchain framework. The SPHINXChain aims to provide a "Chain" in the blockchain systems
+This repository contains code for the SPHINXMerkleBlock project, which is a mining module for the SPHINX blockchain framework. The SPHINXMerkleBlock aims to provide a "Merkle trees" in the blockchain systems
 
 
 ## Components
@@ -23,6 +23,9 @@ Unlike alternative post-quantum digital signature algorithms such as [Crystals-d
 With the SPHINX_MerkleBlock namespace, we empower developers to harness the advanced capabilities of SPHINCS+ and build secure, future-proof applications that can withstand the challenges posed by the dawn of the quantum era.
 
 We know that Hash-Based digital signature scheme is not lattice-based and also relly on the strength of the hash-function, thats why our default 'SPHINX_256' hash function is based on SWIFFTX which is rely on "Lattice-based" strength, here we achieve "Statelessness" and "Lattice-based" at once.
+
+
+NOTE ; In this repository only implement "Merkle trees" scheme based on SPHINCS+ scheme, for digital signature we separated that into another files.
 
 
 ## Components

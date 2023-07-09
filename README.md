@@ -27,23 +27,46 @@ We know that Hash-Based digital signature scheme is not lattice-based and relly 
 
 ## Components
 
-### `SPHINX_MerkleBlock` Namespace
 
-This code represents the implementation of the `SPHINX_MerkleBlock` namespace, which includes the `MerkleBlock` class responsible for constructing and verifying Merkle trees. Let's break down the important components and their functions:
+### Namespace Declarations
+- The code snippet begins with the declaration of several nested namespaces: `SPHINXSign`, `SPHINXBlock`, and `SPHINXMerkleBlock`.
+- These namespaces help organize related functions, classes, and types to avoid naming conflicts.
 
-#### `SPHINX_MerkleBlock::MerkleBlock Class`
+### Forward Declarations
+- The `SPHINXSign` namespace provides a forward declaration for the `verifySignature` function.
+- The `SPHINXBlock` namespace offers a forward declaration for the `Block` class.
 
-This class is responsible for constructing and verifying Merkle trees using various constructions such as FORS, WOTS, Hypertree, and XMSS. It contains the following functions:
+### Types and Structs
+- Within the `SPHINXMerkleBlock` namespace, there are two structs defined: `PublicKey` and `SignedTransaction`.
+- These structs represent public keys and signed transactions, respectively.
 
-- `constructMerkleTree(const std::vector<SignedTransaction>& signedTransactions)`: This function constructs a Merkle tree from a vector of signed transactions. It recursively divides the transactions into halves and combines the hashes of the left and right subtrees to compute the Merkle root.
+### SPHINXHash Namespace
+- The `SPHINXMerkleBlock` namespace includes a nested namespace named `SPHINXHash`.
+- The `SPHINXHash` namespace defines the `SPHINX_256` function, which computes the SPHINX-256 hash of input data.
 
-- `verifyMerkleRoot(const std::string& merkleRoot, const std::vector<SignedTransaction>& transactions)`: This function verifies if a given Merkle root matches the constructed Merkle root from a vector of transactions. It calculates the constructed Merkle root using the `buildMerkleRoot` function and compares it with the provided Merkle root.
+### SPHINCS Namespace
+- The `SPHINXMerkleBlock` namespace contains another nested namespace named `SPHINCS`.
+- The `SPHINCS` namespace defines required functions used in the code snippet.
+- The implementations of these functions are not included in the snippet.
 
-- `hashTransactions(const std::string& transaction1, const std::string& transaction2)`: This function hashes two transactions using the SPHINX-256 hash function. It concatenates the transactions and computes their hash.
+### MerkleBlock Class
+- The `MerkleBlock` class is defined within the `SPHINXMerkleBlock` namespace.
+- It includes several nested classes, such as `ForsConstruction`, `WotsConstruction`, `HypertreeConstruction`, and `XmssConstruction`.
+- These classes represent different stages of constructing a Merkle tree using various cryptographic techniques.
 
-- `buildMerkleRoot(const std::vector<std::string>& transactions)`: This function builds the Merkle root from a vector of transactions. It applies various constructions such as FORS, WOTS, Hypertree, and XMSS to construct the Merkle root.
+### Public Member Functions
+- The `MerkleBlock` class provides public member functions for constructing the Merkle tree (`constructMerkleTree`) and verifying the Merkle root (`verifyMerkleRoot`).
 
-The `MerkleBlock` class also contains private helper classes (`ForsConstruction`, `WotsConstruction`, `HypertreeConstruction`, and `XmssConstruction`) responsible for specific parts of the Merkle tree construction process.
+### Private Member Functions
+- The `MerkleBlock` class includes private member functions used internally for hashing transactions, building the Merkle root, and performing cryptographic operations.
+
+### Member Instances
+- The `MerkleBlock` class includes member instances of the nested classes (`ForsConstruction`, `WotsConstruction`, `HypertreeConstruction`, and `XmssConstruction`).
+- These instances are used to perform the respective stages of constructing the Merkle tree.
+
+### Usage
+- The code snippet demonstrates the process of constructing a Merkle tree using SPHINX-based constructions, such as Fors, Wots, Hypertree, and XMSS.
+- It also includes functions for verifying the Merkle root and signing/verifying signatures.
 
 These components work together to provide functionality for constructing and verifying Merkle trees using the SPHINX cryptographic scheme.
 

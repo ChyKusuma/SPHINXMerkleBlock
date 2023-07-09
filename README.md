@@ -53,7 +53,7 @@ The `MerkleBlock` class also contains private helper classes (`ForsConstruction`
 These components work together to provide functionality for constructing and verifying Merkle trees using the SPHINX cryptographic scheme.
 
 
-### This repository is part of the  [SPHINXPoW](https://github.com/SPHINX-HUB-ORG/SPHINXPoW) [SPHINXMiner](https://github.com/SPHINX-HUB-ORG/SPHINXBLOCK) [SPHINXBlock](https://github.com/SPHINX-HUB-ORG/SPHINXCHAIN) 
+### This repository is part of the  [SPHINXPoW](https://github.com/SPHINX-HUB-ORG/SPHINXPoW) [SPHINXBlock](https://github.com/SPHINX-HUB-ORG/SPHINXBLOCK) [SPHINXBlock](https://github.com/SPHINX-HUB-ORG/SPHINXCHAIN) 
 
 Please note that the code in this repository is a part of the SPHINX blockchain algorithm, which is currently in development and not fully integrated or extensively tested for functionality. The purpose of this repository is to provide a framework and algorithm for the mining scheme in the SPHINX blockchain project.
 

@@ -285,14 +285,14 @@ bool MerkleBlock::verifyMerkleRoot(const std::string& merkleRoot, const std::vec
     }
 
     std::string HypertreeConstruction::constructHypertree(const std::vector<std::string>& roots) const {
-        constexpr uint32_t h = /* specify the value of h */;
-        constexpr uint32_t d = /* specify the value of d */;
-        constexpr size_t n = /* specify the value of n */;
-        constexpr size_t w = /* specify the value of w */;
-        constexpr sphincs_hashing::variant v = /* specify the variant */;
+        constexpr uint32_t h = /* specify the value of h */; // Replace with actual value
+        constexpr uint32_t d = /* specify the value of d */; // Replace with actual value
+        constexpr size_t n = /* specify the value of n */; // Replace with actual value
+        constexpr size_t w = /* specify the value of w */; // Replace with actual value
+        constexpr sphincs_hashing::variant v = /* specify the variant */; // Replace with actual value
 
-        std::string skSeed = /* generate or retrieve the secret key seed */;
-        std::string pkSeed = /* generate or retrieve the public key seed */;
+        std::string skSeed = /* generate or retrieve the secret key seed */; // Replace with actual value
+        std::string pkSeed = /* generate or retrieve the public key seed */; // Replace with actual value
 
         std::string hypertreeRoot(n, '\0');
         sphincs_ht::pkgen<h, d, n, w, v>(reinterpret_cast<const uint8_t*>(skSeed.data()), reinterpret_cast<const uint8_t*>(pkSeed.data()), reinterpret_cast<uint8_t*>(hypertreeRoot.data()));
@@ -304,11 +304,11 @@ bool MerkleBlock::verifyMerkleRoot(const std::string& merkleRoot, const std::vec
     }
 
     std::string constructXmss(const std::vector<std::string>& roots) const {
-        constexpr uint32_t h = /* specify the value of h */;
-        constexpr uint32_t d = /* specify the value of d */;
-        constexpr size_t n = /* specify the value of n */;
-        constexpr size_t w = /* specify the value of w */;
-        constexpr sphincs_hashing::variant v = /* specify the variant */;
+        constexpr uint32_t h = /* specify the value of h */; // Replace with actual value
+        constexpr uint32_t d = /* specify the value of d */; // Replace with actual value
+        constexpr size_t n = /* specify the value of n */; // Replace with actual value
+        constexpr size_t w = /* specify the value of w */; // Replace with actual value
+        constexpr sphincs_hashing::variant v = /* specify the variant */; // Replace with actual value
 
         sphincs_ht::pkgen<h, d, n, w, v>(reinterpret_cast<const uint8_t*>(sk_seed.data()), reinterpret_cast<const uint8_t*>(pk_seed.data()), reinterpret_cast<uint8_t*>(pkey.data()));
         return pkey;

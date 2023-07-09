@@ -30,13 +30,11 @@ NOTE; This repository only implement "Merkle trees" scheme based on SPHINCS+ pri
 
 ## Components
 
-This code represents the implementation of the `SPHINX_MerkleBlock` namespace, which includes the `MerkleBlock` class responsible for constructing and verifying Merkle trees. Let's break down the important components and their functions:
-
-### SPHINX_MerkleBlock Namespace
+### `SPHINX_MerkleBlock` Namespace
 
 This code represents the implementation of the `SPHINX_MerkleBlock` namespace, which includes the `MerkleBlock` class responsible for constructing and verifying Merkle trees. Let's break down the important components and their functions:
 
-#### SPHINX_MerkleBlock::MerkleBlock Class
+#### `SPHINX_MerkleBlock::MerkleBlock Class`
 
 This class is responsible for constructing and verifying Merkle trees using various constructions such as FORS, WOTS, Hypertree, and XMSS. It contains the following functions:
 
@@ -53,7 +51,7 @@ The `MerkleBlock` class also contains private helper classes (`ForsConstruction`
 These components work together to provide functionality for constructing and verifying Merkle trees using the SPHINX cryptographic scheme.
 
 
-### This repository is part of the  [SPHINXPoW](https://github.com/SPHINX-HUB-ORG/SPHINXPoW) [SPHINXBlock](https://github.com/SPHINX-HUB-ORG/SPHINXBLOCK) [SPHINXBlock](https://github.com/SPHINX-HUB-ORG/SPHINXCHAIN) 
+### This repository is part of the  [SPHINXPoW](https://github.com/SPHINX-HUB-ORG/SPHINXPoW) [SPHINXBlock](https://github.com/SPHINX-HUB-ORG/SPHINXBLOCK) [SPHINXChain](https://github.com/SPHINX-HUB-ORG/SPHINXCHAIN) 
 
 Please note that the code in this repository is a part of the SPHINX blockchain algorithm, which is currently in development and not fully integrated or extensively tested for functionality. The purpose of this repository is to provide a framework and algorithm for the mining scheme in the SPHINX blockchain project.
 

@@ -68,13 +68,14 @@ We know that Hash-Based digital signature scheme is not lattice-based and relly 
 These components work together to provide functionality for constructing and verifying Merkle trees using the SPHINX cryptographic scheme.
 
 
-### This repository is part of the  [SPHINXPoW](https://github.com/SPHINX-HUB-ORG/SPHINXPoW) [SPHINXBlock](https://github.com/SPHINX-HUB-ORG/SPHINXBLOCK) [SPHINXChain](https://github.com/SPHINX-HUB-ORG/SPHINXCHAIN) [SPHINXSign](https://github.com/SPHINX-HUB-ORG/SPHINXSIGN) 
+### Note
 
-Please note that the code in this repository is a part of the SPHINX blockchain algorithm, which is currently in development and not fully integrated or extensively tested for functionality. The purpose of this repository is to provide a framework and algorithm for the Merkle Trees scheme in the SPHINX blockchain project.
+Every code in the repository is a part of the SPHINX blockchain algorithm, which is currently in development and not fully integrated or extensively tested for functionality. The purpose of this repository is to provide a framework and algorithm for the digital signature scheme in the SPHINX blockchain project.
 
 As the project progresses, further updates and enhancements will be made to ensure the code's stability and reliability. We encourage contributors to participate in improving and refining the SPHINXBlock algorithm by submitting pull requests and providing valuable insights.
 
-We appreciate your understanding and look forward to collaborative efforts in shaping the future of the SPHINX blockchain project.
+We appreciate your understanding and look forward to collaborative efforts in shaping the future of the SPHINX blockchain projec, to accelerating the construction we can find the specification of [SPHINCS+](https://github.com/SPHINX-HUB-ORG/SPHINXSign/blob/main/sphincs%2B-round3-specification.pdf).
+
 
 ## Getting Started
 To get started with the SPHINX blockchain project, follow the instructions below:

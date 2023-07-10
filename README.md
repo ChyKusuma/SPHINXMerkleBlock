@@ -23,7 +23,7 @@ With the `SPHINXSign` namespace, we empower developers to harness the advanced c
 
 We know that Hash-Based digital signature scheme is not lattice-based and relly on the strengthness of the hash-function, thats why our default [SPHINXHash](https://github.com/ChyKusuma/SPHINXHash) hash function is based on SWIFFTX which is rely on "Lattice-based", here we try to achieve both `Statelessness` and `Lattice-based` at once.
 
-Digital signature scheme like [Gottesman-chuang](https://www.researchgate.net/publication/2186040_Quantum_Digital_Signatures) its trully guarantee by Quantum-Laws, we aware about that, but it's still too expensive technology, its needed new infrastructure, new hardware, a lot of money will only spent into infrastructure, so for today its not solution for us and not applicable. One day, when the world already buld the quantum infrastructure i.e QKD we believed our construction will more safe.
+Digital signature scheme like [Gottesman-chuang](https://www.researchgate.net/publication/2186040_Quantum_Digital_Signatures) its trully guarantee by Quantum-Laws, we aware about that, but it's still too expensive technology, its needed new infrastructure, new hardware, a lot of money will only spent into infrastructure, so for today its not solution for us and not applicable. One day, when the world already buld the quantum infrastructure i.e Quantum Key Distribution we believed our construction will more safe.
 
 
 ### Namespace Declarations

@@ -27,7 +27,7 @@ Digital signature scheme like [Gottesman-chuang](https://www.researchgate.net/pu
 
 
 ### Namespace Declarations
-- The code snippet begins with the declaration of several nested namespaces: `SPHINXSign`, `SPHINXBlock`, and `SPHINXMerkleBlock`.
+- The code begins with the declaration of several nested namespaces: `SPHINXSign`, `SPHINXBlock`, and `SPHINXMerkleBlock`.
 - These namespaces help organize related functions, classes, and types to avoid naming conflicts.
 
 ### Forward Declarations

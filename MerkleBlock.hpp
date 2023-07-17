@@ -101,13 +101,11 @@
 #include "Block.hpp"
 #include "Sign.hpp"
 #include "Utils.hpp"
-#include "Verify.hpp"
 
 
-
-// Forward declaration
-namespace SPHINXVerify {
-    bool verifySignature(const std::vector<uint8_t>& data, const std::string& signature, const SPHINXMerkleBlock::PublicKey& public_key);
+namespace SPHINXUtils {
+    class PublicKey;  // Forward declaration of the PublicKey class
+    bool verifySignature(const std::vector<uint8_t>& data, const std::string& signature, const SPHINXUtils::PublicKey& publicKey);  // Forward declaration of the verifySignature function
 }
 
 namespace SPHINXBlock {
@@ -428,15 +426,15 @@ namespace SPHINXMerkleBlock {
         return pkey;
     }
 
-    bool verifySignature(const std::vector<uint8_t>& data, const std::string& signature, const SPHINXMerkleBlock::PublicKey& public_key) {
-        // Call the verifySignature function from SPHINXVerify namespace to perform the actual signature verification
-        bool signatureValid = SPHINXVerify::verifySignature(data, signature, public_key);
+    bool verifySignature(const std::vector<uint8_t>& data, const std::string& signature, const SPHINXUtils::PublicKey& publicKey) {
+        // Call the verifySignature function from SPHINXUtils namespace to perform the actual signature verification
+        bool signatureValid = SPHINXUtils::verifySignature(data, signature, publicKey);
         return signatureValid;
     }
 
-    bool SPHINXMerkleBlock::verifySignature(const std::vector<uint8_t>& data, const std::string& signature, const SPHINXMerkleBlock::PublicKey& public_key) {
-        // Call the verifySignature function from SPHINXVerify namespace to perform the actual signature verification
-        bool signatureValid = SPHINXVerify::verifySignature(data, signature, public_key);
+    bool SPHINXMerkleBlock::verifySignature(const std::vector<uint8_t>& data, const std::string& signature, const SPHINXUtils::PublicKey& publicKey) {
+        // Call the verifySignature function from SPHINXUtils namespace to perform the actual signature verification
+        bool signatureValid = SPHINXUtils::verifySignature(data, signature, publicKey);
 
         return signatureValid;
     }

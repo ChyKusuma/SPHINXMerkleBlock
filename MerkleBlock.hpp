@@ -103,15 +103,6 @@
 #include "Utils.hpp"
 
 
-namespace SPHINXUtils {
-    class PublicKey;  // Forward declaration of the PublicKey class
-    bool verifySignature(const std::vector<uint8_t>& data, const std::string& signature, const SPHINXUtils::PublicKey& publicKey);  // Forward declaration of the verifySignature function
-}
-
-namespace SPHINXBlock {
-    class Block; // Forward declaration of Block class
-}
-
 namespace SPHINXMerkleBlock {
     // Define PublicKey and other necessary types used in the code
     struct PublicKey {};
@@ -132,7 +123,7 @@ namespace SPHINXMerkleBlock {
     }
 
     namespace SPHINCS {
-    // Define the required functions used in the code
+        // Define the required functions used in the code
         namespace sphincs_adrs {
             // Define the address structure for FORS trees
             struct fors_tree_t {};
@@ -168,7 +159,7 @@ namespace SPHINXMerkleBlock {
 
     class MerkleBlock {
         // Declare Block class as a friend
-        friend class SPHINXBlock::Block;
+        friend class Block;
 
         class ForsConstruction { // Define ForsConstruction class
         public:
@@ -245,7 +236,7 @@ namespace SPHINXMerkleBlock {
         std::vector<std::string> transactionList;
         for (const SignedTransaction& signedTransaction : signedTransactions) {
             // Verify the signature of the signed transaction using the verifySignature function from SPHINXSign namespace
-            if (SPHINXSign::verifySignature(signedTransaction.data, signedTransaction.signature, signedTransaction.public_key)) {
+            if (verifySignature(signedTransaction.data, signedTransaction.signature, signedTransaction.public_key)) {
                 transactionList.push_back(signedTransaction.transaction);
             } else {
                 // Handle invalid signature
@@ -298,7 +289,7 @@ namespace SPHINXMerkleBlock {
 
     bool MerkleBlock::sign(const std::vector<uint8_t>& msg, const std::vector<uint8_t>& sk_seed, const std::vector<uint8_t>& pk_seed, uint64_t idx_tree, uint32_t idx_leaf, std::vector<uint8_t>& sig) const {
         // Call the verifySignature function from SPHINXSign to fulfill the signature requirement
-        bool signatureValid = SPHINXSign::verifySignature(msg, std::string(sig.begin(), sig.end()), PublicKey{});
+        bool signatureValid = verifySignature(msg, std::string(sig.begin(), sig.end()), PublicKey{});
 
         // Return the result of signature verification
         return signatureValid;
@@ -306,7 +297,7 @@ namespace SPHINXMerkleBlock {
 
     bool MerkleBlock::verify(const std::vector<uint8_t>& msg, const std::vector<uint8_t>& sig, const std::vector<uint8_t>& pk_seed, uint64_t idx_tree, uint32_t idx_leaf, const std::vector<uint8_t>& pkey) const {
         // Call the verifySignature function from SPHINXSign to fulfill the signature requirement
-        bool signatureValid = SPHINXSign::verifySignature(msg, std::string(sig.begin(), sig.end()), PublicKey{});
+        bool signatureValid = verifySignature(msg, std::string(sig.begin(), sig.end()), PublicKey{});
 
         // Return the result of signature verification
         return signatureValid;
@@ -361,10 +352,10 @@ namespace SPHINXMerkleBlock {
         constexpr sphincs_hashing::variant v = sphincs_hashing::variant::SHA3_256;  // Variant of the hash function (SHA3-256)
 
         // Generate or retrieve the secret key seed for Hypertree
-        std::string skSeed = SPHINXUtils::generateOrRetrieveSecretKeySeed();
+        std::string skSeed = generateOrRetrieveSecretKeySeed();
 
         // Generate or retrieve the public key seed for Hypertree
-        std::string pkSeed = SPHINXUtils::generateOrRetrievePublicKeySeed();
+        std::string pkSeed = generateOrRetrievePublicKeySeed();
 
         // Create a string to store the Hypertree root
         std::string hypertreeRoot(n, '\0');
@@ -411,10 +402,10 @@ namespace SPHINXMerkleBlock {
         constexpr sphincs_hashing::variant v = sphincs_hashing::variant::SHA3_256;  // Variant of the hash function (SHA3-256)
 
         // Generate the secret key seed for XMSS
-        std::string sk_seed = SPHINXUtils::generateSecretKeySeed();
+        std::string sk_seed = generateSecretKeySeed();
 
         // Generate the public key seed for XMSS
-        std::string pk_seed = SPHINXUtils::generatePublicKeySeed();
+        std::string pk_seed = generatePublicKeySeed();
 
         // Create a string to store the XMSS public key
         std::string pkey(n, '\0');
@@ -426,13 +417,13 @@ namespace SPHINXMerkleBlock {
         return pkey;
     }
 
-    bool verifySignature(const std::vector<uint8_t>& data, const std::string& signature, const SPHINXUtils::PublicKey& publicKey) {
+    bool verifySignature(const std::vector<uint8_t>& data, const std::string& signature, const PublicKey& publicKey) {
         // Call the verifySignature function from SPHINXUtils namespace to perform the actual signature verification
         bool signatureValid = SPHINXUtils::verifySignature(data, signature, publicKey);
         return signatureValid;
     }
 
-    bool SPHINXMerkleBlock::verifySignature(const std::vector<uint8_t>& data, const std::string& signature, const SPHINXUtils::PublicKey& publicKey) {
+    bool verifySignature(const std::vector<uint8_t>& data, const std::string& signature, const PublicKey& publicKey) {
         // Call the verifySignature function from SPHINXUtils namespace to perform the actual signature verification
         bool signatureValid = SPHINXUtils::verifySignature(data, signature, publicKey);
 

@@ -422,13 +422,6 @@ namespace SPHINXMerkleBlock {
         bool signatureValid = SPHINXUtils::verifySignature(data, signature, publicKey);
         return signatureValid;
     }
-
-    bool verifySignature(const std::vector<uint8_t>& data, const std::string& signature, const PublicKey& publicKey) {
-        // Call the verifySignature function from SPHINXUtils namespace to perform the actual signature verification
-        bool signatureValid = SPHINXUtils::verifySignature(data, signature, publicKey);
-
-        return signatureValid;
-    }
 } // namespace SPHINXMerkleBlock
 
 #endif // MERKLEBLOCK_HPP

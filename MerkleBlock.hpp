@@ -89,13 +89,13 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+
 #include "lib/Sphincs/include/fors.hpp"
 #include "lib/Sphincs/include/wots.hpp"
 #include "lib/Sphincs/include/xmss.hpp"
 #include "lib/Sphincs/include/hashing.hpp"
 #include "lib/Sphincs/include/hypertree.hpp"
 #include "lib/Sphincs/include/address.hpp"
-
 #include "Merkleblock_error.hpp"
 #include "Hash.hpp"
 #include "Block.hpp"
@@ -111,7 +111,7 @@ namespace SPHINXMerkleBlock {
         std::string transaction;
         std::vector<uint8_t> data;
         std::string signature;
-        PublicKey public_key;
+        std::string publicKey;
     };
 
     namespace SPHINXHash {
@@ -288,16 +288,23 @@ namespace SPHINXMerkleBlock {
     }
 
     bool MerkleBlock::sign(const std::vector<uint8_t>& msg, const std::vector<uint8_t>& sk_seed, const std::vector<uint8_t>& pk_seed, uint64_t idx_tree, uint32_t idx_leaf, std::vector<uint8_t>& sig) const {
-        // Call the verifySignature function from SPHINXSign to fulfill the signature requirement
-        bool signatureValid = verifySignature(msg, std::string(sig.begin(), sig.end()), PublicKey{});
+        // Call the verify function from the SPHINXMerkleBlock namespace to fulfill the signature requirement
+        bool signatureValid = verify(msg, sig, pk_seed, idx_tree, idx_leaf, PublicKey{});
 
         // Return the result of signature verification
         return signatureValid;
     }
 
+
     bool MerkleBlock::verify(const std::vector<uint8_t>& msg, const std::vector<uint8_t>& sig, const std::vector<uint8_t>& pk_seed, uint64_t idx_tree, uint32_t idx_leaf, const std::vector<uint8_t>& pkey) const {
-        // Call the verifySignature function from SPHINXSign to fulfill the signature requirement
-        bool signatureValid = verifySignature(msg, std::string(sig.begin(), sig.end()), PublicKey{});
+        // Create a transaction object with the necessary data for verification
+        SPHINXTrx::Transaction transaction;
+        transaction.msg = msg;
+        transaction.signature = std::string(sig.begin(), sig.end());
+        transaction.publicKey = std::string(pkey.begin(), pkey.end());
+
+        // Call the verifySignature function from the SPHINXUtils namespace to verify the signature
+        bool signatureValid = SPHINXUtils::verifySignature(transaction);
 
         // Return the result of signature verification
         return signatureValid;

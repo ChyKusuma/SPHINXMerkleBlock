@@ -12,41 +12,38 @@
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-// The provided code defines a set of classes and functions related to a cryptographic protocol using the SPHINCS+ `merkle-trees` and `signature` scheme. This protocol is used to verify the integrity and authenticity of a chain of transactions. Let's break down the code and explain its components in detail:
+// The provided code defines a set of classes and functions related to a cryptographic protocol using the SPHINCS+ `merkle-trees` and `signature` scheme. This protocol is used to verify the integrity and authenticity of a chain of transactions. It defines various classes and functions for constructing and verifying Merkle trees, signing and verifying transactions, and generating hybrid key pairs. The SPHINX Merkle Block protocol is used for creating efficient, secure, and compact Merkle trees for blockchain applications.
 
-// Libraries and Namespaces:
-    // The code uses the "nlohmann::json" library for JSON handling.
-    // It defines a namespace "SPHINXKey" and a nested namespace "SPHINXMerkleBlock" to organize the classes and functions related to the SPHINX signature scheme and Merkle tree construction.
+// SPHINXMerkleBlock::Transaction class:
+    // Represents a transaction in the Merkle block.
+    // Contains data, signature, and public key.
+    // Provides a toJson() function that converts the transaction data to a JSON representation.
 
-// Type Definitions:
-    // The code defines the type "SPHINXPubKey" as an alias for "std::vector<unsigned char>" in the "SPHINXKey" namespace.
+// SPHINXMerkleBlock::SignedTransaction struct:
+    // Represents a signed transaction, including transaction data, signature, and public key.
 
-// Class Definitions:
-    // "SPHINXMerkleBlock::Transaction": Represents a single transaction in the Merkle tree, with fields for data, signature, and the public key used for verification.
-    // "SPHINXMerkleBlock::SignedTransaction": Contains the necessary information for a signed transaction, including the transaction data, signature, data, and public key.
-    // "SPHINXMerkleBlock::MerkleBlock": This is the main class representing the Merkle tree. It contains helper functions and nested construction classes for building the Merkle tree and verifying its integrity.
+// SPHINXMerkleBlock::MerkleBlock class:
+    // Contains helper functions and private nested classes for constructing various components of the Merkle tree.
+    // Provides functions for constructing and verifying the Merkle tree from a vector of signed transactions.
+    // Uses SPHINCS signature scheme for signing and verifying transactions.
+    // Hash functions for constructing FORS (Forest of Random Subsets) tree, WOTS (Winternitz One-Time Signature) tree, and Hypertree.
+    // Generates an XMSS (Extended Merkle Signature Scheme) public key using the provided secret key seed and public key seed.
 
-// Helper Functions:
-    // Various helper functions like "sphinxKeyToString" and "generateHybridKeyPair" are defined to convert SPHINXPubKey to a string representation and generate a hybrid key pair.
+// SPHINXMerkleBlock::sphinxKeyToString function:
+    // Converts a SPHINX public key to a string representation by converting each byte to its two-digit hexadecimal representation.
 
-// Merkle Tree Construction:
-    // The "MerkleBlock" class contains nested construction classes for different parts of the Merkle tree: "ForsConstruction," "WotsConstruction," "HypertreeConstruction," and "XmssConstruction." These classes are used for constructing various components of the tree.
+// SPHINXMerkleBlock::calculateBlockHeaderHash function:
+    // Calculates the hash of the block's header using the provided previous block hash, Merkle root, timestamp, and nonce.
+    // SPHINXMerkleBlock::verifyIntegrity function:
+    // Calls verifyBlock and verifyChain functions from the "Verify.hpp" header to verify the integrity of the block and the entire chain.
 
-// Verification Functions:
-    // "calculateBlockHeaderHash": This function calculates the hash of the block's header, including the Merkle root, for verifying the integrity of the block.
-    // "verifyIntegrity": This function calls "verifyBlock" and "verifyChain" functions from "Verify.hpp" to verify the integrity of a block and the entire chain.
-
-// Merkle Tree Construction and Verification Functions:
-    // "constructMerkleTree": This function recursively constructs the Merkle tree from a vector of signed transactions.
-    // "verifyMerkleRoot": This function verifies the Merkle root against a vector of transactions by checking their signatures and then building the Merkle tree and comparing its root with the provided one.
-
-// Other Helper Functions:
-    // "hashTransactions": This function hashes two transactions using the SPHINX_256 hash function.
-    // "buildMerkleRoot": This function recursively constructs the Merkle root from a vector of transactions.
-    // "sign" and "verify": These functions are used to sign and verify a message using the SPHINX signature scheme.
+// SPHINXMerkleBlock::generateHybridKeyPair function:
+    // Generates a hybrid key pair using the functions from "Key.cpp."
+    // Converts the private and public keys to string representations and returns them as a pair.
+    // Various private nested classes within SPHINXMerkleBlock::MerkleBlock:
+    // ForsConstruction, WotsConstruction, HypertreeConstruction, and XmssConstruction classes are used for constructing specific components of the Merkle tree.
 
 // Interactions:
-
     // The "MerkleBlock" class is used to construct and verify the Merkle tree for the transactions included in a block. It is called from the "Block" class to calculate and set the Merkle root of the block.
     // The "Block" class interacts with the "MerkleBlock" class to obtain the Merkle root, which is then used to sign the block with SPHINCS+ private key. The signed block is then stored, and the Merkle root and signature are added to the block's header.
     // When verifying the block's integrity, the "Block" class calls functions from the "MerkleBlock" class to verify the signature and Merkle root against the transactions.
@@ -70,7 +67,6 @@
 #include "lib/Sphincs/include/hypertree.hpp"
 #include "lib/Sphincs/include/address.hpp"
 #include "lib/Sphincs/include/hashing.hpp"
-#include "lib/Sphincs/include/sphincs.hpp"
 #include "Merkleblock_error.hpp"
 
 #include "Hash.hpp"
@@ -137,7 +133,6 @@ namespace SPHINXMerkleBlock {
     constexpr int SPHINCS_K = 16;
     constexpr int SPHINCS_W = 8;
     constexpr int SPHINCS_V = 4;
-
 
     // SignedTransaction structure
     struct SignedTransaction {
@@ -365,17 +360,20 @@ namespace SPHINXMerkleBlock {
         constexpr size_t n = 32;
         constexpr uint32_t a = 32;
         constexpr uint32_t k = 8;
-        constexpr sphincs_hashing::variant = sphincs_hashing::variant::robust;
+        constexpr sphincs_hashing::variant variant = sphincs_hashing::variant::robust;
 
         uint8_t pk[n];
         // Generate the public key using the provided parameters and the SPHINCS FORS function
-        sphincs_fors::pkgen<n, a, k, variant::robust>(nullptr, nullptr, sphincs_adrs::fors_tree_t(), pk);
+        sphincs_fors::pkgen<n, a, k, variant>(nullptr, nullptr, sphincs_adrs::fors_tree_t(), pk);
 
         // Convert the public key to a string representation
         std::string pkString(pk, pk + n);
 
-        // Return the public key as a single element vector
-        return {pkString};
+        // Perform an additional hashing step using SPHINXHash::SPHINX_256
+        std::string additionalHashedPkString = SPHINXHash::SPHINX_256(pkString);
+
+        // Return the public key after the additional hashing as a single element vector
+        return {additionalHashedPkString};
     }
 
     // Function to construct the WOTS tree from a vector of roots
@@ -385,10 +383,14 @@ namespace SPHINXMerkleBlock {
         for (const auto& root : roots) {
             std::array<uint8_t, n> message;
 
-            // Sign each root using the SPHINCS WOTS function and store the signature as a string
+            // Sign each root using the SPHINCS WOTS function
             sphincs_wots::sign<n, SPHINCS_W, sphincs_hashing::variant::robust>(reinterpret_cast<const uint8_t*>(root.data()), nullptr, nullptr, sphincs_adrs::fors_tree_t(), message.data());
 
-            std::string wotsSignature(reinterpret_cast<const char*>(message.data()), n);
+            // Perform an additional hashing step using SPHINXHash::SPHINX_256 on the message
+            std::string additionalHashedSignature = SPHINXHash::SPHINX_256(reinterpret_cast<const char*>(message.data()), n);
+
+            // Store the signature as a string
+            std::string wotsSignature(additionalHashedSignature.begin(), additionalHashedSignature.end());
             wotsTree.push_back(wotsSignature);
         }
 
@@ -403,7 +405,7 @@ namespace SPHINXMerkleBlock {
         constexpr uint32_t d = 16;
         constexpr size_t n = 32;
         constexpr size_t w = 64;
-        constexpr sphincs_hashing::variant = sphincs_hashing::variant::robust;
+        constexpr sphincs_hashing::variant variant = sphincs_hashing::variant::robust;
 
         // Generate or retrieve the secret key seed
         std::string skSeed = generateOrRetrieveSecretKeySeed();
@@ -413,7 +415,7 @@ namespace SPHINXMerkleBlock {
         std::string hypertreeRoot(n, '\0');
 
         // Generate the public key of the Hypertree using the provided seeds and parameters
-        sphincs_ht::pkgen<h, d, n, w, variant::robust>(reinterpret_cast<const uint8_t*>(skSeed.data()), reinterpret_cast<const uint8_t*>(pkSeed.data()), reinterpret_cast<uint8_t*>(hypertreeRoot.data()));
+        sphincs_ht::pkgen<h, d, n, w, variant>(reinterpret_cast<const uint8_t*>(skSeed.data()), reinterpret_cast<const uint8_t*>(pkSeed.data()), reinterpret_cast<uint8_t*>(hypertreeRoot.data()));
 
         // Create a Hypertree object with the generated public key
         sphincs_ht::hypertree ht(hypertreeRoot);
@@ -426,7 +428,10 @@ namespace SPHINXMerkleBlock {
         // Compute the root hash of the Hypertree
         std::string hypertreeRootHash = ht.compute_root();
 
-        return hypertreeRootHash;
+        // Perform an additional hashing step using SPHINXHash::SPHINX_256 on the Hypertree root hash
+        std::string additionalHashedRoot = SPHINXHash::SPHINX_256(hypertreeRootHash);
+
+        return additionalHashedRoot;
     }
 
     // Function to generate an XMSS public key using the provided secret key seed and public key seed
@@ -436,10 +441,16 @@ namespace SPHINXMerkleBlock {
         constexpr uint32_t d = 16;
         constexpr size_t n = 32;
         constexpr size_t w = 64;
-        constexpr sphincs_hashing::variant = sphincs_hashing::variant::robust;
+        constexpr sphincs_hashing::variant variant = sphincs_hashing::variant::robust;
 
         // Generate the public key of the XMSS using the provided secret key seed and public key seed
-        sphincs_ht::pkgen<h, d, n, w, variant::robust>(reinterpret_cast<const uint8_t*>(sk_seed.data()), reinterpret_cast<const uint8_t*>(pk_seed.data()), reinterpret_cast<uint8_t*>(pkey.data()));
+        sphincs_ht::pkgen<h, d, n, w, variant>(reinterpret_cast<const uint8_t*>(sk_seed.data()), reinterpret_cast<const uint8_t*>(pk_seed.data()), reinterpret_cast<uint8_t*>(pkey.data()));
+
+        // Perform an additional hashing step using SPHINXHash::SPHINX_256 on the XMSS public key
+        std::string additionalHashedPKey = SPHINXHash::SPHINX_256(pkey);
+
+        // Store the result of the additional hashing in the pkey variable
+        pkey = additionalHashedPKey;
 
         return pkey;
     }
@@ -451,7 +462,7 @@ namespace SPHINXMerkleBlock {
         constexpr uint32_t d = 16;
         constexpr size_t n = 32;
         constexpr size_t w = 64;
-        constexpr sphincs_hashing::variant = sphincs_hashing::variant::robust;
+        constexpr sphincs_hashing::variant variant = sphincs_hashing::variant::robust;
 
         // Generate the secret key seed
         std::string sk_seed = generateSecretKeySeed();
@@ -461,16 +472,22 @@ namespace SPHINXMerkleBlock {
         std::string pkey(n, '\0');
 
         // Generate the XMSS public key using the provided Hypertree root and seeds
-        sphincs_ht::pkgen<h, d, n, w, variant::robust>(reinterpret_cast<const uint8_t*>(sk_seed.data()), reinterpret_cast<const uint8_t*>(pk_seed.data()), reinterpret_cast<uint8_t*>(pkey.data()));
+        sphincs_ht::pkgen<h, d, n, w, variant>(reinterpret_cast<const uint8_t*>(sk_seed.data()), reinterpret_cast<const uint8_t*>(pk_seed.data()), reinterpret_cast<uint8_t*>(pkey.data()));
+
+        // Perform an additional hashing step using SPHINXHash::SPHINX_256 on the XMSS public key
+        std::string additionalHashedPKey = SPHINXHash::SPHINX_256(pkey);
+
+        // Store the result of the additional hashing in the pkey variable
+        pkey = additionalHashedPKey;
 
         return pkey;
     }
 
     // Function to verify the signature of a transaction data using the provided public key
     bool verifySignature(const std::string& data, const std::string& signature, const SPHINXKey::SPHINXPubKey& publicKey) {
-        // Assuming SPHINXUtils::verifySignature function is available in the library
+        // Assuming SPHINXUtils::verify_data function is available in the library
         // Verify the signature of the given data using the provided public key
-        bool signatureValid = SPHINXUtils::verifySignature(data, signature, publicKey);
+        bool signatureValid = SPHINXUtils::verify_data(data, signature, publicKey);
         return signatureValid;
     }
 } // namespace SPHINXMerkleBlock
@@ -479,50 +496,58 @@ namespace SPHINXMerkleBlock {
 int main() {
     using namespace SPHINXMerkleBlock;
 
-    // Sample list of signed transactions
-    std::vector<SignedTransaction> signedTransactions;
+    // Create some sample transaction data
+    std::string transactionData1 = "Transaction1";
+    std::string transactionData2 = "Transaction2";
+    std::string transactionData3 = "Transaction3";
 
-    // Add some transactions to the list (for demonstration purposes)
-    // You should replace these transactions with actual signed transactions
-    SignedTransaction transaction1;
-    transaction1.transaction.data = "Transaction Data 1";
-    transaction1.transaction.signature = "Signature 1";
-    // Assuming SPHINXKey::generateHybridKeyPair() generates the hybrid key pair
-    transaction1.transaction.publicKey = generateHybridKeyPair().second;
-    signedTransactions.push_back(transaction1);
+    // Generate some sample public and private keys
+    SPHINXKey::SPHINXPubKey publicKey1{1, 2, 3, 4, 5};
+    SPHINXKey::SPHINXPubKey publicKey2{6, 7, 8, 9, 10};
+    SPHINXKey::SPHINXPubKey publicKey3{11, 12, 13, 14, 15};
 
-    SignedTransaction transaction2;
-    transaction2.transaction.data = "Transaction Data 2";
-    transaction2.transaction.signature = "Signature 2";
-    // Assuming SPHINXKey::generateHybridKeyPair() generates the hybrid key pair
-    transaction2.transaction.publicKey = generateHybridKeyPair().second;
-    signedTransactions.push_back(transaction2);
+    // Create three transactions and sign them
+    SignedTransaction transaction1{
+        Transaction{transactionData1, "signature1", publicKey1},
+        "transactionData1",
+        {1, 2, 3},
+        "signature1",
+        publicKey1
+    };
+    SignedTransaction transaction2{
+        Transaction{transactionData2, "signature2", publicKey2},
+        "transactionData2",
+        {4, 5, 6},
+        "signature2",
+        publicKey2
+    };
+    SignedTransaction transaction3{
+        Transaction{transactionData3, "signature3", publicKey3},
+        "transactionData3",
+        {7, 8, 9},
+        "signature3",
+        publicKey3
+    };
 
-    SignedTransaction transaction3;
-    transaction3.transaction.data = "Transaction Data 3";
-    transaction3.transaction.signature = "Signature 3";
-    // Assuming SPHINXKey::generateHybridKeyPair() generates the hybrid key pair
-    transaction3.transaction.publicKey = generateHybridKeyPair().second;
-    signedTransactions.push_back(transaction3);
-
-    // Create a MerkleBlock instance
+    // Create a MerkleBlock object
     MerkleBlock merkleBlock;
 
-    // Construct the Merkle tree from the list of signed transactions
+    // Construct the Merkle tree from the signed transactions
+    std::vector<SignedTransaction> signedTransactions = {transaction1, transaction2, transaction3};
     std::string merkleRoot = merkleBlock.constructMerkleTree(signedTransactions);
 
-    // Print the Merkle root
-    std::cout << "Merkle Root: " << merkleRoot << std::endl;
-
-    // Verify the Merkle root against the list of transactions
+    // Verify the Merkle root against the transactions
     bool isMerkleRootValid = merkleBlock.verifyMerkleRoot(merkleRoot, signedTransactions);
-
-    // Print the verification result
     if (isMerkleRootValid) {
-        std::cout << "Merkle Root is valid." << std::endl;
+        std::cout << "Merkle root is valid.\n";
     } else {
-        std::cout << "Merkle Root is NOT valid." << std::endl;
+        std::cout << "Merkle root is NOT valid.\n";
     }
+
+    // Generate a hybrid key pair
+    auto [privateKey, publicKey] = merkleBlock.generateHybridKeyPair();
+    std::cout << "Generated Hybrid Private Key: " << privateKey << "\n";
+    std::cout << "Generated Hybrid Public Key: " << sphinxKeyToString(publicKey) << "\n";
 
     return 0;
 }

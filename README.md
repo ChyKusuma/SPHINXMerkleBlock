@@ -29,8 +29,8 @@ Digital signature scheme like [Gottesman-chuang](https://www.researchgate.net/pu
 
 ### JSON and SPHINXKey Namespace
 
-- The code starts with the use of JSON library with the alias json from the nlohmann namespace.
-- Next, a namespace called SPHINXKey is declared, which contains a type SPHINXPubKey representing a vector of unsigned characters. It seems to be used for public keys.
+- The code starts with the use of `JSON` library with the alias json from the `nlohmann namespace`.
+- Next, a namespace called `SPHINXKey` is declared, which contains a type `SPHINXPubKey` representing a `vector of unsigned` characters. It seems to be used for public keys.
 
 ### Forward Declarations
 

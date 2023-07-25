@@ -42,17 +42,17 @@ Digital signature scheme like [Gottesman-chuang](https://www.researchgate.net/pu
 
 ### SPHINXMerkleBlock Namespace
 
-- A new namespace named SPHINXMerkleBlock is defined, encapsulating all the classes and functions related to the `Merkle block`.
+- A new namespace named `SPHINXMerkleBlock` is defined, encapsulating all the classes and functions related to constructed the Merkle block.
 
  ### Transaction class 
  
-- The Transaction class represents a transaction and contains d`ata, signature`, and `publicKey` as its member variables.
+- The Transaction class represents a transaction and contains `data, signature`, and `publicKey` as its member variables.
 It provides a member function `toJson()` to convert the transaction data into a `JSON-formatted` string.
 
 ### Constants
 
 - Several constants are declared, such as `SPHINCS_N, SPHINCS_H, SPHINCS_D, etc`., which might be used to call function from SPHINCS+ library.
-- 
+
 ### SignedTransaction Structure
 
 - The `SignedTransactio`n structure represents a signed transaction and includes `transaction, transactionData, data, signature`, and `publicKey` as its members.

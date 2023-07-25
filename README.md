@@ -102,7 +102,7 @@ verifyMerkleRoot Function
 ### Signing and Key Generation Functions
 
 - The sign function is used for signing a message using the SPHINCS signature scheme.
-- 
+  
 - The nested classes `ForsConstruction, WotsConstruction, HypertreeConstruction`, and `XmssConstruction` handle various steps in constructing the `Merkle tree`, involving different cryptographic functions.
 
 ### Verification Function

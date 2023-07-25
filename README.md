@@ -25,46 +25,87 @@ We know that Hash-Based digital signature scheme is not lattice-based and relly 
 
 Digital signature scheme like [Gottesman-chuang](https://www.researchgate.net/publication/2186040_Quantum_Digital_Signatures) its trully guarantee by Quantum-Laws, we aware about that, but it's still too expensive technology, its needed new infrastructure, new hardware, a lot of money will only spent into infrastructure, so for today its not solution for us and not applicable. One day, when the world already build the quantum infrastructure i.e Quantum Key Distribution we believed our construction will more safe.
 
+## Function
 
-### Namespace Declarations
-- The code begins with the declaration of several nested namespaces: `SPHINXSign`, `SPHINXBlock`, and `SPHINXMerkleBlock`.
-- These namespaces help organize related functions, classes, and types to avoid naming conflicts.
+### JSON and SPHINXKey Namespace
+
+- The code starts with the use of JSON library with the alias json from the nlohmann namespace.
+- Next, a namespace called SPHINXKey is declared, which contains a type SPHINXPubKey representing a vector of unsigned characters. It seems to be used for public keys.
 
 ### Forward Declarations
-- The `SPHINXSign` namespace provides a forward declaration for the `verifySignature` function.
-- The `SPHINXBlock` namespace offers a forward declaration for the `Block` class.
 
-### Types and Structs
-- Within the `SPHINXMerkleBlock` namespace, there are two structs defined: `PublicKey` and `SignedTransaction`.
-- These structs represent public keys and signed transactions, respectively.
+- Three functions are forward-declared, which means their actual implementation is provided later in the code.
+    - These functions are:
+    - `generateOrRetrieveSecretKeySeed`: It's expected to generate or retrieve a secret key seed.
+    - `generateOrRetrievePublicKeySeed`: It's expected to generate or retrieve a public key seed.
+    - `verifySignature`: It's expected to verify a signature using a public key.
 
-### SPHINXHash Namespace
-- The `SPHINXMerkleBlock` namespace includes a nested namespace named `SPHINXHash`.
-- The `SPHINXHash` namespace defines the `SPHINX_256` function, which computes the SPHINX-256 hash of input data.
+### SPHINXMerkleBlock Namespace
 
-### SPHINCS Namespace
-- The `SPHINXMerkleBlock` namespace contains another nested namespace named `SPHINCS`.
-- The `SPHINCS` namespace defines required functions used in the code snippet.
-- The implementations of these functions are not included in the snippet.
+- A new namespace named SPHINXMerkleBlock is defined, encapsulating all the classes and functions related to the `Merkle block`.
 
-### MerkleBlock Class
-- The `MerkleBlock` class is defined within the `SPHINXMerkleBlock` namespace.
-- It includes several nested classes, such as `ForsConstruction`, `WotsConstruction`, `HypertreeConstruction`, and `XmssConstruction`.
-- These classes represent different stages of constructing a Merkle tree using various cryptographic techniques.
+ ### Transaction class 
+ 
+- The Transaction class represents a transaction and contains d`ata, signature`, and `publicKey` as its member variables.
+It provides a member function `toJson()` to convert the transaction data into a `JSON-formatted` string.
 
-### Public Member Functions
-- The `MerkleBlock` class provides public member functions for constructing the Merkle tree (`constructMerkleTree`) and verifying the Merkle root (`verifyMerkleRoot`).
+### Constants
 
-### Private Member Functions
-- The `MerkleBlock` class includes private member functions used internally for hashing transactions, building the Merkle root, and performing cryptographic operations.
+- Several constants are declared, such as `SPHINCS_N, SPHINCS_H, SPHINCS_D, etc`., which might be used to call function from SPHINCS+ library.
+- 
+### SignedTransaction Structure
 
-### Member Instances
-- The `MerkleBlock` class includes member instances of the nested classes (`ForsConstruction`, `WotsConstruction`, `HypertreeConstruction`, and `XmssConstruction`).
-- These instances are used to perform the respective stages of constructing the Merkle tree.
+- The `SignedTransactio`n structure represents a signed transaction and includes `transaction, transactionData, data, signature`, and `publicKey` as its members.
 
-### Usage
-- The code snippet demonstrates the process of constructing a Merkle tree using SPHINX-based constructions, such as Fors, Wots, Hypertree, and XMSS.
-- It also includes functions for verifying the Merkle root and signing/verifying signatures.
+### MerkleBlock class 
+
+- The MerkleBlock class represents a `Merkle block` and includes several helper classes for `Merkle tree` construction: `ForsConstruction, WotsConstruction, HypertreeConstruction`, and `XmssConstruction`.
+  - First the hash function used default hash function in library based on `SHAKE256 robust scheme`
+  - Then it hashing again using `SPHINXHash` to ensure long term usage.
+
+- It also contains functions for constructing the Merkle tree `(constructMerkleTree)` and verifying the Merkle root `(verifyMerkleRoot)`.
+
+### Calculate block header
+
+- This function takes the `previous block hash, Merkle root, timestamp`, and `nonce` as inputs and returns the hash of the block's header data.
+
+### verifyIntegrity Function
+
+This function calls `verifyBlock` and `verifyChain` functions from `Verify.hpp` and prints the results of block and chain integrity verification.
+
+### sphinxKeyToString Function
+
+- This function converts the SPHINX public key to a string representation.
+
+### generateHybridKeyPair Function
+
+- This function generates a hybrid key pair using functions from `Key.cpp` It returns the private key as a string and the public key as a `SPHINXKey::SPHINXPubKey`.
+
+### MerkleTree Construction
+
+- The `constructMerkleTree` function recursively constructs the Merkle tree from a vector of signed transactions.
+verifyMerkleRoot Function
+
+### verifyMerkleRoot Function
+
+- The verifyMerkleRoot function verifies the Merkle root against a vector of transactions, ensuring the validity of transactions using their signatures.
+
+### hashTransactions Function
+
+- This function calculates the hash of two transactions using the `SPHINX_256` hash function.
+
+### buildMerkleRoot Function
+
+- This function constructs the Merkle root from a vector of transactions using recursion.
+
+### Signing and Key Generation Functions
+
+- The sign function is used for signing a message using the SPHINCS signature scheme.
+- 
+- The nested classes `ForsConstruction, WotsConstruction, HypertreeConstruction`, and `XmssConstruction` handle various steps in constructing the `Merkle tree`, involving different cryptographic functions.
+
+### Verification Function
+- The verifySignature function is used to verify the signature of a transaction using the provided public key.
 
 These components work together to provide functionality for constructing and verifying Merkle trees using the SPHINX cryptographic scheme.
 

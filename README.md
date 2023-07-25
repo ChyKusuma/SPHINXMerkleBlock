@@ -110,7 +110,9 @@ verifyMerkleRoot Function
 
 These components work together to provide functionality for constructing and verifying Merkle trees using the SPHINCS+ cryptographic scheme.
 
-In the provided code for "sign.hpp" and "merkleblock.cpp," the SPHINCS+ implementation appears to be stateless. The functions for `signing` and `verifying` transactions do not rely on any previous state or stored information, and the signing process is done independently for each transaction.
+### Important to review
+
+In the provided code for "sign.hpp" and "merkleblock.cpp" the SPHINCS+ implementation appears to be stateless. The functions for `signing` and `verifying` transactions do not rely on any previous state or stored information, and the signing process is done independently for each transaction.
 
 
 ### Note

@@ -108,7 +108,7 @@ verifyMerkleRoot Function
 ### Verification Function
 - The verifySignature function is used to verify the signature of a transaction using the provided public key.
 
-These components work together to provide functionality for constructing and verifying Merkle trees using the SPHINX cryptographic scheme.
+These components work together to provide functionality for constructing and verifying Merkle trees using the SPHINCS+ cryptographic scheme.
 
 
 ### Note
